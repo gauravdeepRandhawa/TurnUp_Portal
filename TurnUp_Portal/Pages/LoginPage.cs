@@ -19,14 +19,10 @@ namespace TurnUp_Portal.Pages
             driver.Navigate().GoToUrl("http://horse.industryconnect.io/");
             driver.Manage().Window.Maximize();
 
-            // WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-            //wait.Until(SeleniumExtras.WaitHelpers.Expected)
-
             // Identify username textbox and enter valid username
             Wait.WaitToBeVisible(driver, "Id", "Password", 2);   //Explicit wait
             IWebElement usernameTextbox = driver.FindElement(By.Id("UserName"));
             usernameTextbox.SendKeys("hari");
-            
 
             // Identify password textbox and enter valid password
             IWebElement passwordTextbox = driver.FindElement(By.Id("Password"));

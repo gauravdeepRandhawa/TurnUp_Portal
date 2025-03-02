@@ -14,30 +14,37 @@ namespace TurnUp_Portal.Utilities
         public static void WaitToBeClickable(IWebDriver driver, string locatorType, string locatorValue, int seconds)
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, seconds));
-            
-            if (locatorType == "XPath")
+
+            switch (locatorType)
             {
+                case "XPath":
                 wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath(locatorValue)));
-            }
-            else if (locatorType == "Id")
-            {
+                break;
+
+                case "Id":
                 wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Id(locatorValue)));
+                break;
             }
         }
 
         public static void WaitToBeVisible(IWebDriver driver, string locatorType, string locatorValue, int seconds)
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, seconds));
+            switch (locatorType)
+            {
+                case "XPath":
+                    wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath(locatorValue)));
+                    break;
 
-            if (locatorType == "XPath")
-            {
-                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath(locatorValue)));
+                case "Id":
+                    wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Id(locatorValue)));
+                    break;
             }
-            else if (locatorType == "Id")
-            {
-                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Id(locatorValue)));
-            }
+
+            
         }
 
     }
 }
+
+
