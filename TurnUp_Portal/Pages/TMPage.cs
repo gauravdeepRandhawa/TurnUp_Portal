@@ -1,9 +1,11 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TurnUp_Portal.Utilities;
 
 namespace TurnUp_Portal.Pages
 {
@@ -40,13 +42,18 @@ namespace TurnUp_Portal.Pages
             //Click on save button
             IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
             saveButton.Click();
-            Thread.Sleep(3000);
+
+            //Explicit Wait
+            //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            //wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span")));
+
 
             // Check if Time record has been created successfully
+            Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 2);
             IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
             goToLastPageButton.Click();
-            Thread.Sleep(3000);
 
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 2);
             IWebElement newCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
 
             if (newCode.Text == "TC_0001")
@@ -60,16 +67,15 @@ namespace TurnUp_Portal.Pages
             }
         }
 
+        // Edit new record
         public void EditTimeRecord(IWebDriver driver)
         {
             IWebElement newCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
             if (newCode.Text == "TC_0001")
             {
-                //edit new record
                 IWebElement lastRecordEditButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
                 lastRecordEditButton.Click();
-                Thread.Sleep(5000);
-
+               
                 IWebElement descriptionTextBoxEdit = driver.FindElement(By.Id("Description"));
                 descriptionTextBoxEdit.Clear();
                 descriptionTextBoxEdit.SendKeys("New edited entry");
@@ -84,16 +90,19 @@ namespace TurnUp_Portal.Pages
                 Console.WriteLine("Time record has not been edited");
             }
         }
+
+        // Delete new record added at last
         public void DeleteTimeRecord(IWebDriver driver)
         {
-            Thread.Sleep(2000);
+            Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 2);
             IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
             goToLastPageButton.Click();
-            Thread.Sleep(2000);
+
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 10);
             IWebElement newCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
             if (newCode.Text == "TC_0001")
             {
-            //delete new record
+            Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[2]", 10);
             IWebElement lastRecordDeleteButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[2]"));
             lastRecordDeleteButton.Click();
             driver.SwitchTo().Alert().Accept();

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TurnUp_Portal.Utilities;
 
 namespace TurnUp_Portal.Pages
 {
@@ -22,6 +23,7 @@ namespace TurnUp_Portal.Pages
             //wait.Until(SeleniumExtras.WaitHelpers.Expected)
 
             // Identify username textbox and enter valid username
+            Wait.WaitToBeVisible(driver, "Id", "Password", 2);   //Explicit wait
             IWebElement usernameTextbox = driver.FindElement(By.Id("UserName"));
             usernameTextbox.SendKeys("hari");
             

@@ -10,6 +10,9 @@ public class Program
         //Open Chrome Browser
         IWebDriver driver = new ChromeDriver();
 
+        //Implicit wait
+        //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+
         //Login page object initialization and definition
         LoginPage loginPageObj = new LoginPage();
         loginPageObj.LoginActions(driver);
